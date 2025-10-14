@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as AuthService from "../services/auth.service";
 import AppError from "../utils/appError";
-import fa from "zod/v4/locales/fa.cjs";
-import en from "zod/v4/locales/en.cjs";
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
@@ -148,4 +146,55 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { signUp, signIn };
+
+const signOut = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    res.status(200).json({
+      success: true,
+      message: {
+        en: "User logged out successfully.",
+        ar: "تم تسجيل الخروج بنجاح.",
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
+
+    if (!refreshToken) {
+      throw new AppError('Refresh token not provided', 'رمز تحديث التوكن غير موجود', 401);
+    }
+
+    const tokens = await AuthService.refreshToken(refreshToken);
+
+    // Set new cookies
+    res.cookie('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    res.status(200).json({
+      success: true,
+      data: tokens,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { signUp, signIn, signOut, refreshToken };

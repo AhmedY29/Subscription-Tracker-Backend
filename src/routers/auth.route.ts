@@ -9,9 +9,9 @@ router.post("/sign-up", AuthController.signUp )
 
 router.post("/sign-in", AuthController.signIn)
 
-router.post("/sign-out", (req, res) => {
-    res.send("sign-out")
-})
+router.post("/sign-out", AuthController.signOut)
+
+router.post("/refresh-token", AuthController.refreshToken)
 
 
 export default router;
