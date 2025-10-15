@@ -443,6 +443,3 @@ All errors are returned in both English and Arabic.
 
 
 Built with ❤️ for efficient subscription management
-
-- [ ] Invoice generation
-- [ ] Subscription sharing
