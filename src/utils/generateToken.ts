@@ -9,7 +9,7 @@ const generateTokens = async (
     {
       type: 'access',
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         createdAt: user.createdAt,
       },
@@ -22,7 +22,7 @@ const generateTokens = async (
     {
       type: 'refresh',
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         createdAt: user.createdAt,
       },

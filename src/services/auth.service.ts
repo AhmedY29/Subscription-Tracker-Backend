@@ -4,6 +4,7 @@ import generateTokens from "../utils/generateToken";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { jwtConfig } from "../config/jwt";
+import { sendWelcomeEmail } from "../utils/send-email";
 
 const signUp = async (name: string, email: string, password: string) => {
   const existingUser = await User.findOne({ email });
@@ -19,6 +20,8 @@ const signUp = async (name: string, email: string, password: string) => {
   const { refreshToken, accessToken } = await generateTokens(newUser);
   const userObj = newUser.toObject();
   const safeUser = { ...userObj, password: undefined };
+
+  await sendWelcomeEmail({ to: email, userName: name });
   return { user: safeUser, accessToken, refreshToken };
 };
 
