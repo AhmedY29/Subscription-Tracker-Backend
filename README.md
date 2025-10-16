@@ -2,19 +2,6 @@
 
 A comprehensive RESTful API for managing subscriptions with user authentication, email notifications, and advanced security features built with Node.js, Express, TypeScript, and MongoDB.
 
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Project Structure](#project-structure)
-- [Security Features](#security-features)
-- [Data Models](#data-models)
-
 ## ✨ Features
 
 ### Authentication & Authorization
